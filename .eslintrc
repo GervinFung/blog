@@ -1,0 +1,33 @@
+{
+    //ref: https://stackoverflow.com/questions/58727078/eslint-allow-multiple-parsers-based-on-glob-patterns
+    "overrides": [
+        {
+            "files": ["**.ts", "**.js"],
+            "extends": ["@poolofdeath20/eslint-config/node"]
+        },
+        {
+            "files": ["**.vue"],
+            "parser": "vue-eslint-parser",
+            "parserOptions": {
+                "parser": "@typescript-eslint/parser",
+                "plugins": ["@typescript-eslint"]
+            },
+            "extends": ["plugin:vue/vue3-strongly-recommended"],
+            "rules": {
+                "vue/html-indent": ["error", 4],
+                "indent": ["error", 4],
+                "vue/html-self-closing": [
+                    "error",
+                    {
+                        "html": {
+                            "void": "always"
+                        }
+                    }
+                ],
+                "vue/max-attributes-per-line": [0],
+                "vue/v-bind-style": [0, "shorthand"]
+            }
+        },
+
+    ]
+}

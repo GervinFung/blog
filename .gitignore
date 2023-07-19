@@ -1,0 +1,13 @@
+# dependencies
+node_modules
+dist
+
+# local env files
+.env
+
+# generated definition
+src/env.d.ts
+
+# font
+public/font
+src/styles/font.css

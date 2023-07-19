@@ -1,0 +1,41 @@
+---
+import { CollectionEntry, getCollection } from 'astro:content';
+import BlogPost from '../layouts/blog/post.vue';
+
+export const getStaticPaths = async () => {
+	const posts = await getCollection('blog');
+	return posts.map((post) => ({
+		props: post,
+		params: { slug: post.slug },
+	}));
+}
+type Props = CollectionEntry<'blog'>;
+
+const post = Astro.props;
+
+const postWithDescription = {
+    ...post,
+    data: {
+        ...post.data,
+        description: post.body
+                .split('')
+                .filter((_, index) => index <= 150)
+                .concat('...')
+                .join('')
+    }
+}
+const { Content } = await post.render();
+
+const { url } = Astro
+const canonicalURL = new URL(url.pathname, Astro.site);
+---
+
+<BlogPost
+    {...postWithDescription.data}
+    url={url.href}
+    canonicalURL={canonicalURL.href}
+    generator={Astro.generator}
+>
+	<h1>{post.data.title}</h1>
+	<Content />
+</BlogPost>

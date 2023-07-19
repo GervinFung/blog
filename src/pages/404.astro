@@ -1,0 +1,30 @@
+---
+import Head from '../components/common/head.vue';
+import Header from '../components/common/header.vue';
+import Footer from '../components/common/footer.vue';
+import consts from '../consts/index';
+import Error404 from '../components/blog/404.vue'
+
+const { url } = Astro
+const canonicalURL = new URL(url.pathname, Astro.site)
+---
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <Head
+            title={consts.title}
+            description={consts.description}
+            canonicalURL={canonicalURL.href}
+            url={url.href}
+            generator={Astro.generator}
+        />
+    </head>
+    <body
+        class="w-full min-h-full flex flex-col place-items-center bg-slate-50"
+    >
+        <Header />
+        <Error404 link={url.pathname.replace('/', '')} />
+        <Footer />
+    </body>
+</html>

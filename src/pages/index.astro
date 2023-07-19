@@ -1,0 +1,40 @@
+---
+import Head from '../components/common/head.vue';
+import Header from '../components/common/header.vue';
+import Footer from '../components/common/footer.vue';
+import AllBlogs from '../components/blog/all.vue'
+import consts from '../consts/index';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+    (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+);
+
+const { url } = Astro
+const canonicalURL = new URL(url.pathname, Astro.site)
+---
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <Head
+            title={consts.title}
+            description={consts.description}
+            canonicalURL={canonicalURL.href}
+            url={url.href}
+            generator={Astro.generator}
+        />
+    </head>
+    <body
+        class="w-full min-h-full flex flex-col place-items-center bg-slate-50"
+    >
+        <Header />
+        <main class="flex-[1_0] w-11/12 sm:w-10/12">
+            <section>
+                <AllBlogs anyPosts={posts} />
+            </section>
+        </main>
+        <Footer />
+    </body>
+</html>
+
