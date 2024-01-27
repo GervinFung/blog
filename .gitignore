@@ -7,7 +7,3 @@ dist
 
 # generated definition
 src/env.d.ts
-
-# font
-public/font
-src/styles/font.css
